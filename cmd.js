@@ -136,7 +136,7 @@ function installShims ({ modules, overwrite }, done) {
   }
 
   parallel(shimPkgNames.map(function (name) {
-    var modPath = path.resolve('./node_modules/' + name)
+    var modPath = require.resolve(name)
     return function (cb) {
       fs.exists(modPath, function (exists) {
         if (!exists) return cb()
