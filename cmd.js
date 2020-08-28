@@ -136,7 +136,7 @@ function installShims ({ modules, overwrite }, done) {
   }
 
   parallel(shimPkgNames.map(function (name) {
-    var modPath = require.resolve(name)
+    var modPath = require.resolve(name, { paths: [path.join(__dirname.split('node_modules')[0], 'node_modules')] })
     return function (cb) {
       fs.exists(modPath, function (exists) {
         if (!exists) return cb()
@@ -260,7 +260,7 @@ function copyShim (cb) {
 function hackPackageJSONs (modules, done) {
   fixPackageJSON(modules, './package.json', true)
 
-  var finder = find('./node_modules')
+  var finder = find(path.join(__dirname.split('node_modules')[0], 'node_modules'))
 
   finder.on('file', function (file) {
     if (path.basename(file) !== 'package.json') return

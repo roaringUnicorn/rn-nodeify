@@ -25,7 +25,7 @@ var path = require('path')
 // }
 
 module.exports = function hackFiles (hacks) {
-  var finder = find('./node_modules')
+  var finder = find(path.join(__dirname.split('node_modules')[0], 'node_modules'))
   hacks = hacks || hackers.map(h => h.name)
 
   finder.on('file', function (file) {
